@@ -55,3 +55,12 @@ Retourner sur le manager1
 cd 3DOKR_PROJ
 docker stack deploy --compose-file Docker-compose.yml dog-cat
 ```
+
+attendre que les conteneurs se sont bien lancés puis ouvrir un navigateur : 
+```
+vote :
+192.168.99.100:8082
+
+result : 
+192.168.99.100:8081
+```
