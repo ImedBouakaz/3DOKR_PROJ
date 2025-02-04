@@ -3,7 +3,7 @@ services:
     container_name: web-vote
     image: imedbouakaz/vote_app
     ports:
-      - "8082:8080"
+      - "8080:8080"
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -23,7 +23,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-      
     depends_on:
       - postgres
     networks:
@@ -59,9 +58,53 @@ services:
     networks:
       - backend
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - backend
+    depends_on:
+      - cadvisor
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    networks:
+      - backend
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys:/sys
+      - /var/lib/docker/:/var/lib/docker
+    networks:
+      - backend
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - backend
+    depends_on:
+      - prometheus
 
 volumes:
   postgres_data:
+
 networks:
   backend:
     driver: overlay
