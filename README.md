@@ -64,5 +64,5 @@ Assurez-vous d'avoir installé les outils suivants :
 
 Une fois le déploiement terminé, vous pouvez accéder à l'application via les adresses suivantes :
 
-- **Vote** : [http://192.168.99.100:8082](http://192.168.99.100:8082)
+- **Vote** : [http://192.168.99.100:8080](http://192.168.99.100:8080)
 - **Résultats** : [http://192.168.99.100:8081](http://192.168.99.100:8081)
