@@ -1,66 +1,52 @@
 # 3DOKR_PROJ
 
-### Requirements :
+Conteneurisation d'une application web de vote.
 
-- Virtual Box
-Pour l'installer : [ici](https://www.virtualbox.org/wiki/Downloads)
+## Requirements
 
-- Vagrant
-Pour l'installer : [ici](https://developer.hashicorp.com/vagrant/install?product_intent=vagrant)
-### Installation Guide
+[Vagrant](https://developer.hashicorp.com/vagrant/install) Pour déployer le cluster.\
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) Pour accueillir le cluster.
 
-cloner le repo localement
-```
+## Installation
+
+Clonez le répertoire
+```bash
 git clone https://github.com/ImedBouakaz/3DOKR_PROJ.git
-```
-
-Se déplacer dans le fichier : 
-```
 cd 3DOKR_PROJ
 ```
+Initialisez les VMs avec Vagrant (Peut prendre un peu de temps)
+```bash
+vagrant up
+```
+Copiez le projet vers manager1
 
-Création des VM pour Swarm : 
-```
-vagrant up 
-```
-Penser à bien attendre que les VM s'ouvre
-
-Installer le plugin scp de Vagrant : 
-```
+- Installez d'abord le plugin SCP
+```bash
 vagrant plugin install vagrant-scp
-vagrant scp 3DOKR_PROJ manager1:~
 ```
-
-Se connecter à chacune des machines et installer Docker dessus
+- Et copiez ensuite le dossier
+```bash
+vagrant scp ../3DOKR_PROJ manager1:~
 ```
+Maintenant, connectez vous au manager1 pour build le swarm
+```bash
 Vagrant ssh manager1
-Vagrant ssh worker1
-Vagrant ssh worker2
+~$ docker swarm init --advertise-addr 192.168.99.100
 ```
-Suivre la procédure suivant la distribution installé (ici, Ubuntu) : [ici](https://docs.docker.com/engine/install/)
+La commande va vous retourner une autre commande similaire à celle ci:
+```bash
+docker swarm join --token [token-id-abc...]
+```
+Elle est à exécuter sur les deux workers
 
-se reconnecter sur le manager1, et construire le Swarm : 
-```
-docker swarm init --advertise-addr 192.168.99.100
-```
-Le stdout de la commande donnera une nouvelle commande de la forme :
-```
- docker swarm join --token [token-id-abc...]
-```
-à exécuter sur les 2 workers
-
-Retourner sur le manager1
-
-```
+Retournez ensuite sur le manager1 pour déployer les Dockers:
+```bash
 cd 3DOKR_PROJ
-docker stack deploy --compose-file Docker-compose.yml dog-cat
+~$ docker stack deploy --compose-file compose.yaml dog-cat
 ```
+## Utilisation
 
-attendre que les conteneurs se sont bien lancés puis ouvrir un navigateur : 
-```
-vote :
-192.168.99.100:8082
+Après avoir suivi les instructions, vous serez en mesure de voter et de consulter les votes via les adresses suivantes:
 
-result : 
-192.168.99.100:8081
-```
+[http://192.168.99.100:8080](http://192.168.99.100:8082) (Vote)\
+[http://192.168.99.100:8081](http://192.168.99.100:8081) (Résultats)
