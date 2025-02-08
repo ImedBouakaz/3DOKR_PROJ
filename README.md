@@ -74,4 +74,4 @@ Vous pouvez surveiller l'application à l'aide de Grafana :
 - **Grafana** : [http://192.168.99.100:3000](http://192.168.99.100:3000)
 - **Identifiants par défaut** : `admin:admin`
 - **Ajouter la source de données Prometheus (dans l'onglet `Data Source`)** : `http://10.0.2.15:9090`
-- **Importer des dashboards** : Utilisez ceux proposés par Grafana ou bien des dashboards personnalisés comme celui proposé dans le projet.
+- **Importer des dashboards** : Utilisez ceux proposés par Grafana ou bien des dashboards personnalisés comme celui proposé dans le projet : `/dashboard/docker-dashboard.json`. 
