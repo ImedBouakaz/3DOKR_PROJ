@@ -57,7 +57,7 @@ Assurez-vous d'avoir installé les outils suivants :
      ```
    - Déployer les services :
      ```bash
-     docker stack deploy --compose-file compose.yaml dog-cat
+     docker stack deploy --compose-file docker-compose.yml dog-cat
      ```
 
 ## Utilisation
