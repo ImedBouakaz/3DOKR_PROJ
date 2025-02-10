@@ -67,6 +67,13 @@ Une fois le déploiement terminé, vous pouvez accéder à l'application via les
 - **Vote** : [http://192.168.99.100:8080](http://192.168.99.100:8080)
 - **Résultats** : [http://192.168.99.100:8081](http://192.168.99.100:8081)
 
+
+- **Pour reset les résultats** :
+```
+chmod +x reset.sh
+./reset.sh
+```
+
 ## Monitoring
 
 Vous pouvez surveiller l'application à l'aide de Grafana :
